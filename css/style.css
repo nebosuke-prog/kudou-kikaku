@@ -433,7 +433,8 @@ img {
    2. About Usセクション
    ========================================= */
 .features-wrapper {
-    display: grid;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
     gap: 30px;
 }
 
@@ -441,26 +442,30 @@ img {
     background: #fff;
     border-radius: 16px;
     padding: 40px;
-    display: flex;
-    gap: 30px;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
     box-shadow: var(--shadow-sm);
     transition: var(--transition-base);
     border: 1px solid var(--border-color);
 }
 
 .feature-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
     box-shadow: var(--shadow-md);
     border-color: var(--secondary-color);
 }
 
 .feature-icon {
     font-family: var(--font-heading);
-    font-size: 3rem;
+    font-size: 4rem;
     font-weight: 900;
     color: var(--secondary-color);
     line-height: 1;
-    opacity: 0.3;
+    opacity: 0.2;
+    margin-bottom: -10px;
 }
 
 .feature-content h3 {
@@ -550,8 +555,8 @@ img {
    ========================================= */
 .recruit-wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 40px;
     align-items: center;
 }
 
@@ -576,10 +581,10 @@ img {
 }
 
 .recruit-details-card h3 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     margin-bottom: 25px;
     text-align: center;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
     padding-bottom: 15px;
 }
 
@@ -786,6 +791,16 @@ img {
 @media screen and (max-width: 992px) {
     .hero-text h1 {
         font-size: 2.8rem;
+    }
+
+    .features-wrapper {
+        grid-template-columns: 1fr !important;
+    }
+
+    .feature-card {
+        flex-direction: column !important;
+        text-align: left;
+        align-items: flex-start !important;
     }
 
     .service-grid {
