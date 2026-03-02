@@ -1,249 +1,46 @@
-/* =========================================
-   基本設定・変数定義 (Design System)
-   ========================================= */
-:root {
-    /* カラーパレット (BtoBの信頼感とBtoCの温かみ) */
-    --primary-color: #050a15;
-    /* 深みのあるネイビーブルー（信頼・誠実） */
-    --primary-light: #18426d;
-    --secondary-color: #F8961E;
-    /* 暖かみのあるオレンジ（親しみ・活気） */
-    --secondary-hover: #e5820b;
-    --accent-color: #F9C74F;
-    /* アクセントのイエロー */
-    --accent-light: #fff9e6;
-    /* 採用セクションなどの背景用 */
+import re
 
-    --text-main: #ffffff;
-    /* 可読性の高いダークグレー */
-    --text-muted: #666666;
-    --text-light: #f5f7fa;
+with open('css/style.css', 'r') as f:
+    css = f.read()
 
-    --bg-main: #02050a;
-    --bg-light: #050a15;
-    /* わずかに青みがかったクリーンな背景 */
-    --border-color: rgba(255, 255, 255, 0.1);
+# 1. Colors to Dark Theme
+css = css.replace('--primary-color: #0A2540;', '--primary-color: #050a15;')
+css = css.replace('--primary-light: #1A3E6D;', '--primary-light: #0a1122;')
+css = css.replace('--text-main: #333333;', '--text-main: #ffffff;')
+css = css.replace('--text-dark: #1A1A1A;', '--text-dark: #f0f0f0;')
+css = css.replace('--bg-main: #FFFFFF;', '--bg-main: #02050a;')
+css = css.replace('--bg-light: #F8FAFC;', '--bg-light: #050a15;')
+css = css.replace('--border-color: #E2E8F0;', '--border-color: rgba(255, 255, 255, 0.1);')
 
-    /* フォント */
-    --font-heading: 'Outfit', 'Noto Sans JP', sans-serif;
-    --font-body: 'Noto Sans JP', sans-serif;
+# 2. Add --text-muted
+css = css.replace('--text-dark: #f0f0f0;\n', '--text-dark: #f0f0f0;\n    --text-muted: rgba(255, 255, 255, 0.6);\n')
 
-    /* 余白 (Spacing) */
-    --space-sm: 1rem;
-    --space-md: 2rem;
-    --space-lg: 4rem;
-    --space-xl: 8rem;
+# 3. Headings letter spacing
+css = css.replace('letter-spacing: 0.05em;', 'letter-spacing: 0.1em;')
 
-    /* トランジション */
-    --transition-fast: 0.2s ease;
-    --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-
-    /* シャドウ */
-    --shadow-sm: 0 4px 6px rgba(10, 37, 64, 0.05);
-    --shadow-md: 0 10px 30px rgba(10, 37, 64, 0.08);
-    --shadow-lg: 0 20px 40px rgba(10, 37, 64, 0.12);
-}
-
-/* =========================================
-   リセット & ベーススタイル
-   ========================================= */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-    font-size: 16px;
-}
-
-body {
-    font-family: var(--font-body);
-    font-weight: 400;
-    line-height: 1.8;
-    color: var(--text-main);
-    background-color: var(--bg-main);
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+# 4. English Subtitle class
+en_subtitle = """
+.en-subtitle {
     font-family: var(--font-heading);
-    font-weight: 700;
-    line-height: 1.3;
-    color: var(--primary-color);
-}
-
-a {
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: var(--transition-base);
-}
-
-a:hover {
-    color: var(--secondary-color);
-}
-
-ul {
-    list-style: none;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* =========================================
-   レイアウト・ユーティリティ
-   ========================================= */
-.container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
-}
-
-.container-sm {
-    max-width: 900px;
-}
-
-.section-padding {
-    padding: var(--space-xl) 0;
-}
-
-.text-center {
-    text-align: center;
-}
-
-.text-primary {
-    color: var(--primary-color);
-}
-
-.bg-light {
-    background-color: var(--bg-light);
-}
-
-.bg-accent {
-    background-color: var(--accent-light);
-}
-
-.mt-10 {
-    margin-top: 10px;
-}
-
-.mt-15 {
-    margin-top: 15px;
-}
-
-.mt-30 {
-    margin-top: 30px;
-}
-
-.mt-40 {
-    margin-top: 40px;
-}
-
-/* 見出しスタイル */
-.section-title {
-    margin-bottom: var(--space-lg);
-}
-
-.section-title .subtitle {
-    display: block;
-    font-family: var(--font-heading);
-    font-weight: 600;
-    font-size: 1.1rem;
-    color: var(--secondary-color);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-}
-
-.section-title h2 {
-    font-size: 2.2rem;
-    position: relative;
-}
-
-/* ボタン */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 14px 28px;
-    border-radius: 50px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    border: none;
-    transition: var(--transition-base);
-    text-align: center;
-}
-
-.btn-primary {
-    background-color: var(--text-main);
-    color: #000;
-}
-
-.btn-primary:hover {
-    background-color: var(--secondary-color);
-    color: #fff;
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(10, 37, 64, 0.15);
-}
-
-.btn-secondary {
-    background-color: var(--secondary-color);
-    color: #fff;
-}
-
-.btn-secondary:hover {
-    background-color: var(--secondary-hover);
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(248, 150, 30, 0.2);
-}
-
-.btn-sm {
-    padding: 10px 20px;
     font-size: 0.9rem;
+    color: var(--secondary-color);
+    letter-spacing: 0.2em;
+    display: block;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    font-weight: 600;
 }
+"""
+css = css.replace('/* =========================================\n   ボタン\n   ========================================= */', en_subtitle + '/* =========================================\n   ボタン\n   ========================================= */')
 
-.btn-large {
-    padding: 18px 36px;
-    font-size: 1.1rem;
-}
+# 5. Button Primary colors
+css = css.replace('.btn-primary {\n    background-color: var(--primary-color);\n    color: #fff;', '.btn-primary {\n    background-color: var(--text-main);\n    color: #000;')
 
-.btn-block {
-    display: flex;
-    width: 100%;
-}
+# 6. Button Hover
+css = css.replace('background-color: var(--primary-light);', 'background-color: var(--secondary-color);\n    color: #fff;')
 
-.btn-shadow {
-    box-shadow: var(--shadow-md);
-}
-
-/* マイクロアニメーション (フェードアップ) */
-.fade-up {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity var(--transition-slow), transform var(--transition-slow);
-}
-
-.fade-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-
+# 7. Replace Header
+header_css = """
 /* =========================================
    ヘッダー
    ========================================= */
@@ -355,11 +152,11 @@ img {
     transform: rotate(-45deg);
     background-color: #fff;
 }
+"""
+css = re.sub(r'/\* =========================================\n   ヘッダー\n   ========================================= \*/.*?/\* =========================================\n   1\. Heroセクション\n   ========================================= \*/', header_css + '\n/* =========================================\n   1. Heroセクション\n   ========================================= */', css, flags=re.DOTALL)
 
-/* =========================================
-   1. Heroセクション
-   ========================================= */
-
+# 8. Replace Hero
+hero_css = """
 .dark-hero {
     position: relative;
     height: 100vh;
@@ -409,14 +206,6 @@ img {
 }
 
 .hero-en-title {
-    font-family: var(--font-heading);
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: -0.02em;
-    color: #fff;
-    text-transform: uppercase;
-    font-size: clamp(4rem, 8vw, 7rem); /* FIX CSS SPECIFICITY */
-
     font-family: var(--font-heading);
     font-size: clamp(4rem, 8vw, 7rem);
     font-weight: 800;
@@ -626,11 +415,11 @@ img {
     background-color: var(--secondary-color);
     border-color: var(--secondary-color);
 }
+"""
+css = re.sub(r'\.hero \{.*?/\* =========================================\n   2\. About Usセクション\n   ========================================= \*/', hero_css + '\n/* =========================================\n   3. About Usセクション (Dark)\n   ========================================= */', css, flags=re.DOTALL)
 
-/* =========================================
-   3. About Usセクション (Dark)
-   ========================================= */
-
+# 9. Replace About Us
+about_css = """
 .features-wrapper {
     display: grid;
     gap: 30px;
@@ -772,11 +561,11 @@ img {
     font-size: 0.95rem;
     line-height: 1.8;
 }
+"""
+css = re.sub(r'\.features-wrapper \{.*?/\* =========================================\n   4\. Recruitセクション\n   ========================================= \*/', about_css + '\n/* =========================================\n   5. Recruitセクション\n   ========================================= */', css, flags=re.DOTALL)
 
-/* =========================================
-   5. Recruitセクション
-   ========================================= */
-
+# 10. Replace Recruit
+recruit_css = """
 .recruit-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -848,11 +637,11 @@ img {
 .recruit-list dd:last-child {
     border-bottom: none;
 }
+"""
+css = re.sub(r'\.recruit-wrapper \{.*?/\* =========================================\n   5\. Company & Accessセクション\n   ========================================= \*/', recruit_css + '\n/* =========================================\n   6. Company & Accessセクション\n   ========================================= */', css, flags=re.DOTALL)
 
-/* =========================================
-   6. Company & Accessセクション
-   ========================================= */
-
+# 11. Replace Company
+company_css = """
 .company-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -891,86 +680,12 @@ img {
 .company-map iframe {
     filter: invert(90%) hue-rotate(180deg) contrast(100%);
 }
-
-/* =========================================
-   7. Contactセクション
-   ========================================= */
-.contact-lead {
-    font-size: 1.6rem;
-    margin-bottom: 20px;
-}
-
-.contact-desc {
-    max-width: 700px;
-    margin: 0 auto 50px;
-}
-
-.contact-methods {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    background: var(--bg-light);
-    border-radius: 20px;
-    padding: 50px;
-}
-
-.contact-phone {
-    background: #fff;
-    padding: 40px 30px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-}
-
-.phone-label {
-    display: block;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-bottom: 10px;
-}
-
-.phone-number {
-    display: block;
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: var(--secondary-color);
-    margin-bottom: 10px;
-    font-family: var(--font-heading);
-}
-
-.phone-number:hover {
-    color: var(--primary-color);
-}
-
-.phone-hours {
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
-.phone-note {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-}
-
-.contact-web {
-    background: #fff;
-    padding: 40px 30px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-}
-
-.web-label {
-    display: block;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-bottom: 15px;
-}
-
-.web-note {
-    font-size: 0.9rem;
-    line-height: 1.6;
-}
+"""
+css = re.sub(r'\.company-wrapper \{.*?/\* =========================================\n   6\. Contactセクション\n   ========================================= \*/', company_css + '\n/* =========================================\n   7. Contactセクション\n   ========================================= */', css, flags=re.DOTALL)
 
 
+# 12. Replace Footer
+footer_css = """
 /* =========================================
    8. Footer
    ========================================= */
@@ -1022,51 +737,12 @@ img {
     padding-top: 30px;
     text-align: center;
 }
-
-/* =========================================
-   レスポンシブデザイン (Media Queries)
-   ========================================= */
-@media screen and (max-width: 993px) {
-    .hero-text h1 {
-        font-size: 2.8rem;
-    }
-
-    .features-wrapper {
-        grid-template-columns: 1fr;
-    }
-
-    .feature-card {
-        flex-direction: column;
-        text-align: left;
-        align-items: flex-start;
-    }
-
-    .service-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .recruit-wrapper,
-    .company-wrapper,
-    .contact-methods {
-        grid-template-columns: 1fr;
-    }
-
-    .recruit-content {
-        order: 2;
-    }
-
-    .recruit-details-card {
-        order: 1;
-    }
-}
-
-@media screen and (max-width: 900px) {
-    :root {
-        --space-xl: 4rem;
-        --space-lg: 2.5rem;
-    }
+"""
+css = re.sub(r'/\* =========================================\n   フッター\n   ========================================= \*/.*?/\* =========================================\n   レスポンシブデザイン \(Media Queries\)\n   ========================================= \*/', footer_css + '\n/* =========================================\n   レスポンシブデザイン (Media Queries)\n   ========================================= */', css, flags=re.DOTALL)
 
 
+# 13. Mobile Overrides
+mobile_css = """
     /* ヘッダー SP対応 */
     .header { padding: 15px 0; }
     .logo a { font-size: 1.4rem; }
@@ -1123,15 +799,7 @@ img {
     /* セクション調整 */
     .section-title h2 { font-size: 1.8rem; }
     
-    .hero-en-title {
-    font-family: var(--font-heading);
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: -0.02em;
-    color: #fff;
-    text-transform: uppercase;
-    font-size: clamp(4rem, 8vw, 7rem); /* FIX CSS SPECIFICITY */
- font-size: clamp(3rem, 10vw, 4.5rem); }
+    .hero-en-title { font-size: clamp(3rem, 10vw, 4.5rem); }
     .hero-text h1 { font-size: 1.5rem; margin-bottom: 1rem; }
     .hero-text p { font-size: 1rem; line-height: 1.8; }
     .hero-buttons { flex-direction: column; gap: 15px; }
@@ -1159,196 +827,9 @@ img {
     
     .footer { padding: 40px 0 20px; }
     .footer-links { flex-direction: column; gap: 15px; }
+"""
+css = re.sub(r'    /\* ヘッダー SP対応 \*/.*?\}', mobile_css + '\n}', css, flags=re.DOTALL)
 
-}
+with open('css/style.css', 'w') as f:
+    f.write(css)
 
-    .logo a {
-        font-size: 1.4rem;
-    }
-
-    /* フルスクリーン・ハンバーガーメニューのリッチ化 */
-    .nav-menu {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        background-color: rgba(10, 37, 64, 0.98);
-        /* プライマリーカラーの透過背景 */
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.4s ease, visibility 0.4s ease;
-        z-index: 1000;
-    }
-
-    .nav-menu.active {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .nav-menu ul {
-        flex-direction: column;
-        gap: 30px;
-        text-align: center;
-    }
-
-    .nav-menu a {
-        color: #fff;
-        font-size: 1.6rem;
-        font-family: var(--font-heading);
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        display: block;
-        transform: translateY(20px);
-        opacity: 0;
-        transition: transform 0.4s ease, opacity 0.4s ease, color 0.2s ease;
-    }
-
-    .nav-menu.active a {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
-    .nav-menu.active li:nth-child(1) a {
-        transition-delay: 0.1s;
-    }
-
-    .nav-menu.active li:nth-child(2) a {
-        transition-delay: 0.2s;
-    }
-
-    .nav-menu.active li:nth-child(3) a {
-        transition-delay: 0.3s;
-    }
-
-    .nav-menu.active li:nth-child(4) a {
-        transition-delay: 0.4s;
-    }
-
-    .nav-menu a:hover {
-        color: var(--secondary-color);
-    }
-
-    .header-action {
-        display: none;
-    }
-
-    .menu-toggle {
-        display: block;
-        z-index: 1001;
-        /* メニューより上に配置 */
-    }
-
-    .header.scrolled .menu-toggle span {
-        background-color: var(--primary-color);
-    }
-
-    .menu-toggle.active span {
-        background-color: #fff !important;
-        /* メニュー開いた時は必ず白 */
-    }
-
-    /* セクション調整 */
-    .section-title h2 {
-        font-size: 1.8rem;
-    }
-
-    .hero {
-        padding-top: 60px;
-    }
-
-    .hero-text h1 {
-        font-size: 2.2rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .hero-text p {
-        font-size: 1rem;
-        line-height: 1.8;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .btn {
-        width: 100%;
-        padding: 16px 20px;
-        font-size: 1rem;
-    }
-
-    .feature-card {
-        flex-direction: column;
-        gap: 15px;
-        padding: 25px;
-        text-align: center;
-    }
-
-    .feature-icon {
-        font-size: 2.5rem;
-        margin-bottom: -10px;
-    }
-
-    .service-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .service-img-wrapper {
-        height: 180px;
-    }
-
-    .recruit-wrapper,
-    .company-wrapper {
-        gap: 40px;
-    }
-
-    .recruit-content h3 {
-        font-size: 1.5rem;
-    }
-
-    .recruit-details-card {
-        padding: 25px;
-        border-radius: 12px;
-    }
-
-    .recruit-details-card h3 {
-        font-size: 1.3rem;
-    }
-
-    .recruit-list dd {
-        padding-left: 0;
-        margin-left: 15px;
-    }
-
-    .contact-methods {
-        padding: 20px 15px;
-        gap: 20px;
-    }
-
-    .contact-phone,
-    .contact-web {
-        padding: 25px 20px;
-    }
-
-    .phone-number {
-        font-size: 2rem;
-    }
-
-    .footer {
-        padding: 40px 0 20px;
-    }
-
-    .footer-links {
-        flex-direction: column;
-        gap: 15px;
-    }
-}

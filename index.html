@@ -12,7 +12,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Outfit:wght@400;600;800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=4">
+    <link rel="stylesheet" href="css/style.css?v=11">
 </head>
 
 <body>
@@ -44,22 +44,50 @@
     </header>
 
     <!-- 1. Heroセクション -->
-    <section class="hero glass-hero">
-        <div class="hero-bg">
-            <!-- Background Image Area (CSS) -->
-        </div>
-        <div class="hero-content container">
+    <section class="hero dark-hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
             <div class="hero-text fade-up">
-                <h1>心を込めた手作業で、<br>ビジネスと地域をつなぐ架け橋に。</h1>
+                <p class="en-subtitle" style="color:#fff; opacity:0.8; font-size:1rem; margin-bottom: 2rem;">.
+                    <br>DELIVER<br>BEYOND</p>
+                <h1 class="hero-en-title">品質と正確性の、その先へ。</h1>
                 <p>
-                    横浜市港北区の「工藤企画」は、正確・丁寧な梱包・発送代行や検品などの軽作業を通じて、企業様の業務効率化を強力にサポートするアウトソーシング・パートナーです。<br><br>
-                    同時に、地域に根ざした企業として、高田西周辺にお住まいの皆様に「温かく働きやすい日常の職場」を提供しています。企業の皆様には確かな安心を、地域の皆様には心地よい働きがいを。工藤企画は、手作業の力で双方の笑顔をクリエイトします。
+                    横浜市港北区の「工藤企画」は、正確・丁寧な梱包・発送代行や検品などの軽作業を通じ、<br>
+                    企業様のビジネスを強力にスケールさせるアウトソーシング・パートナーです。<br>
+                    <br>
+                    企業の皆様には確かな安心を、地域の皆様には心地よい働きがいを。<br>
+                    手作業の力で双方の未来をクリエイトします。
                 </p>
-                <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-primary">業務委託のご相談</a>
-                    <a href="#recruit" class="btn btn-secondary">採用情報を見る</a>
-                </div>
             </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>SCROLL</span>
+            <div class="line"></div>
+        </div>
+    </section>
+
+    <!-- Dual Track Navigation -->
+    <section class="dual-track">
+        <div class="track-container">
+            <a href="#services" class="track-card">
+                <div class="track-bg img-business"></div>
+                <div class="track-content">
+                    <span class="track-subtitle">法人のお客様へ</span>
+                    <h2 class="track-title">For BUSINESS</h2>
+                    <p>梱包・発送代行、検品・軽作業のアウトソーシング。<br>貴社のコアビジネスへの集中を加速させます。</p>
+                    <div class="track-arrow"></div>
+                </div>
+            </a>
+            <a href="#recruit" class="track-card">
+                <div class="track-bg img-recruit"></div>
+                <div class="track-content">
+                    <span class="track-subtitle">求職者の方へ</span>
+                    <h2 class="track-title">For RECRUIT</h2>
+                    <p>高田西周辺でのパート・内職スタッフ募集。<br>未経験から始められる、地域密着の温かい職場です。</p>
+                    <div class="track-arrow"></div>
+                </div>
+            </a>
         </div>
     </section>
 
