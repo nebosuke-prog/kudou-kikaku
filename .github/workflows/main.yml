@@ -1,0 +1,23 @@
+name: Deploy to Xserver
+
+on:
+  push:
+    branches:
+      - main # mainブランチにPushされた時だけ動くようにします
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: XserverにSSH接続して最新コードを反映
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.XSERVER_HOST }}
+          username: ${{ secrets.XSERVER_USER }}
+          port: ${{ secrets.XSERVER_PORT }}
+          key: ${{ secrets.XSERVER_KEY }}
+          script: |
+            cd kudou-kikaku.com/public_html
+            git fetch origin
+            git reset --hard origin/main
